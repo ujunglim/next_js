@@ -4,18 +4,20 @@ import Seo from '../components/Seo';
 const API_KEY = 'eef37b219b26aa1e6b4248fd6c44cc0e';
 
 export default function Home() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState();
 
   const fetchData = async () => {
-    const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`);
-    const {results} = await res.json();
-    setMovies(results);
+      const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`);
+      // const res = await fetch('/api/movies');
+      const {results} = await res.json();
+      setMovies(results);
   }
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
-    <div>
+    <div className='container'>
       <Seo title={'Home'} />
       {!movies && <h4>Loading...</h4>}
       {movies?.map(movie => (
@@ -45,8 +47,6 @@ export default function Home() {
           text-align: center;
         }
       `}</style>
-      )
-      )}
     </div>
   );
 }
